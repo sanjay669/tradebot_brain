@@ -31,10 +31,24 @@ target Rs.200–500 profit, bot to trade autonomously.
    autonomously via `docker compose up`. Claude cannot watch ticks and discretionarily
    trade through the day, nor guarantee profit.
 
-## Decisions pending (user)
-- Sandbox (recommended first) vs go live (flip both latches — explicit confirm needed).
-- Which sub-Rs.1000 instrument.
-- Add take-profit exit? Add intraday square-off at 15:30?
+## Decisions made (2026-07-02)
+- **Mode: SANDBOX on real prices** for 2026-07-03 (user chose to de-risk before live).
+  `sandbox: true`, `live_confirmed: false` — unchanged.
+- **Instrument: NTPC** (`NSE_EQ|INE733E01010`, ~Rs.358 live) — liquid index heavyweight,
+  fits the Rs.1000 budget, enough intraday range to actually trigger the ORB. Chosen by
+  fetching live LTPs (SBIN excluded at Rs.1047; other candidates: ITC/ONGC/COALINDIA/
+  POWERGRID/WIPRO/BANKBARODA all <Rs.1000).
+- **Take-profit + EOD square-off: DONE** (bot-managed, code committed to TraderBot repo).
+
+## Morning checklist for the sandbox run
+1. `python refresh_token.py` (token expires ~03:30 IST — needed fresh each day).
+2. Start before ~09:15 IST so the 09:15–09:30 opening range builds: `docker compose up`.
+3. After close: review `trade_journal.csv`, write the daily review, commit brain + bot.
+
+## Still open (before any LIVE attempt)
+- **Static IP whitelist** in the Upstox app — live orders are REJECTED without it.
+- Rs.200–500/day target is NOT realistic on Rs.1000 (needs 20–50%/day). Reset expectations
+  or add capital before going live.
 
 ## Related
 [[Morning-Runbook]] · [[Token-Refresh]] · [[Risk-Rules]] · [[Daily-Review-Template]]
