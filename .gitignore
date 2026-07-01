@@ -1,0 +1,9 @@
+# Obsidian per-machine state — don't sync these
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.trash/
+
+# OS cruft
+.DS_Store
+Thumbs.db
