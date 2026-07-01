@@ -6,12 +6,27 @@ tags: [ops, runbook, auth]
 Upstox **access tokens expire every day** (~03:30 IST), so a fresh one is needed before
 each session. Handled by `refresh_token.py`.
 
-## What it does
+## Why the flow uses a hosted redirect page (not localhost)
+Upstox's app form runs a **URL security filter** that **rejects localhost / raw-IP
+redirect URIs** ("This URL isn't allowed by our security policy") — it requires a
+stable, established HTTPS domain with a valid SSL cert. So the OAuth redirect points at
+a small static page we host on **GitHub Pages**, and you paste the returned code back
+into the script. There is no localhost callback server anymore.
+
+- **Redirect page repo:** `sanjay669/upstox-auth` (public; contains only a static
+  `index.html`, no secrets).
+- **Live redirect URL:** `https://sanjay669.github.io/upstox-auth/`
+- This exact URL must be set in **both** `.env` (`UPSTOX_REDIRECT_URI`) **and** the
+  Upstox app's Redirect URL field — byte-for-byte identical, trailing slash included.
+
+## What `refresh_token.py` does now (paste-code flow)
 1. Opens the Upstox login dialog in your browser (uses `UPSTOX_API_KEY` +
    `UPSTOX_REDIRECT_URI`).
-2. Catches the auth code on a localhost callback server.
-3. Exchanges it for an access token (using `UPSTOX_API_SECRET`).
-4. **Rewrites the `UPSTOX_ACCESS_TOKEN` line in `.env`** in place.
+2. You log in with 2FA. Upstox redirects to the hosted page, which **displays the auth
+   `code`** (with a copy button).
+3. You **paste the code** (or the whole redirected URL) at the terminal prompt.
+4. It exchanges the code for a token (using `UPSTOX_API_SECRET`) and **rewrites the
+   `UPSTOX_ACCESS_TOKEN` line in `.env`** in place.
 
 ## Run it
 ```
@@ -20,8 +35,8 @@ python refresh_token.py
 
 ## Prerequisites in `.env` ([[Config-Reference]])
 - `UPSTOX_API_KEY`, `UPSTOX_API_SECRET`
-- `UPSTOX_REDIRECT_URI` — **must exactly match** the URI registered in the Upstox app
-  settings (default `http://127.0.0.1:8765/callback`).
+- `UPSTOX_REDIRECT_URI` = `https://sanjay669.github.io/upstox-auth/` — **must exactly
+  match** the URL registered in the Upstox app settings.
 
 ## Why it's not fully unattended
 Upstox requires an **interactive login with 2FA**, so this can't run headless without
@@ -32,8 +47,10 @@ extended-token/TOTP setup. Practical consequence:
   start. See [[Docker]].
 
 ## Troubleshooting
-- *"Did not receive an auth code"* → redirect URI mismatch. Make `.env` and the Upstox
-  app settings identical.
+- *"This URL isn't allowed by our security policy"* (Upstox app form) → you tried a
+  localhost/IP/dynamic-DNS/tunnel URL. Use the github.io HTTPS page above.
+- *Code paste fails / token exchange 400* → the `redirect_uri` sent must match the
+  registered one exactly; also the code is single-use and expires fast — re-run.
 - *401 / token errors when trading* → token expired or stale; re-run the refresh.
 - Static IP: orders are only accepted from the **whitelisted IP**
   ([[SEBI-Algo-Trading-Rules]]).

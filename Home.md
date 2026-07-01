@@ -42,3 +42,6 @@ back here.
 - Phase: **1 — sandbox only** (see [[System-Overview#Roadmap]])
 - SDK pinned: `upstox-python-sdk==2.28.0`
 - Safety latches: `sandbox: true` AND `live_confirmed: false` → **cannot place real orders**
+- OAuth wired up: hosted redirect page `https://sanjay669.github.io/upstox-auth/`
+  (paste-code flow — Upstox blocks localhost). See [[Token-Refresh]].
+- Verified: token refresh + `docker compose up` boot the runner in sandbox OK.

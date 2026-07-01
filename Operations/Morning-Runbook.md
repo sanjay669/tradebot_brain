@@ -13,7 +13,8 @@ scheduler was intentionally skipped). All times IST.
    ```
    python refresh_token.py
    ```
-   Opens a browser, you log in (2FA), token is written into `.env`. See [[Token-Refresh]].
+   Opens a browser, you log in (2FA), then **paste the code** shown on the hosted
+   redirect page back at the prompt; token is written into `.env`. See [[Token-Refresh]].
 3. **Sanity-check config** — `config.yaml` mode latches are where you expect them.
    Phase 1 = `sandbox: true`. See [[Config-Reference]] and [[Going-Live-Checklist]].
 

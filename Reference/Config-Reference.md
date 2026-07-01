@@ -11,7 +11,7 @@ Every knob, and where it lives. Two files: `config.yaml` (behavior) and `.env` (
 | `UPSTOX_API_KEY` | App API key (client id), from the Algo Trading App settings |
 | `UPSTOX_API_SECRET` | App secret — treat like a password |
 | `UPSTOX_ACCESS_TOKEN` | Daily token; written by `refresh_token.py` ([[Token-Refresh]]) |
-| `UPSTOX_REDIRECT_URI` | OAuth callback; must match app settings exactly |
+| `UPSTOX_REDIRECT_URI` | OAuth redirect; hosted HTTPS page `https://sanjay669.github.io/upstox-auth/` (Upstox blocks localhost/IP). Must match the app's Redirect URL exactly — [[Token-Refresh]] |
 | `DATA_DIR` (Docker) | Where journal/approvals are written; `/app/data` in the container |
 
 ## `config.yaml`

@@ -9,6 +9,9 @@ are the exact methods/fields the code relies on — re-verify if you ever bump t
 ## Auth
 - OAuth dialog → auth code → token exchange (`LoginApi.token`). Handled by
   `refresh_token.py`; tokens expire daily. See [[Token-Refresh]].
+- Redirect URI must be a **hosted HTTPS page** (`https://sanjay669.github.io/upstox-auth/`)
+  — Upstox's security filter blocks localhost/IP/tunnel URLs. Paste-code flow, no
+  localhost callback server.
 - Static IP whitelist + 2FA required — [[SEBI-Algo-Trading-Rules]].
 
 ## Market data (`MarketQuoteApi`)
