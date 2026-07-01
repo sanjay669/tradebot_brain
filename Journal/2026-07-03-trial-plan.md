@@ -14,11 +14,13 @@ target Rs.200–500 profit, bot to trade autonomously.
 - Mode still **sandbox: true** (NOT live) — deliberate; go-live not confirmed.
 
 ## Open blockers / honest constraints (must resolve before this is real)
-1. **Transaction costs dominate on Rs.1000.** Upstox intraday brokerage ≈ Rs.20/order
-   (or 0.05%), so a buy+sell round trip ≈ **Rs.40+ before STT/GST ≈ ~4%+ of Rs.1000**.
-   "Maximum trades, small margins" therefore loses to costs by arithmetic — the more
-   small trades, the more certain the loss. Few high-conviction trades only, or treat
-   as a paper exercise. This is the decisive point.
+1. **Position size, not costs, is the wall.** (Correction: an earlier note claimed
+   ~4% round-trip cost — WRONG. Upstox intraday brokerage is Rs.20 OR 0.05% *whichever
+   is lower*; on a Rs.1000 order that's ~Rs.0.50/order, round trip ~Rs.1.5 all-in ≈
+   0.15%.) The real problem: to make Rs.200–500/day on Rs.1000 capital needs a **20–50%
+   daily return**, which is unrealistic/unsafe. With qty=1 and max 5 trades/day at a
+   +0.5% target, best case is a few rupees/day, not Rs.200–500. The target needs more
+   capital or is simply not achievable at this size — costs are a minor factor.
 2. **Instrument price.** Agent trades ONE hardcoded stock (RELIANCE, >Rs.1000/share) at
    fixed qty 1 → exceeds the Rs.1000 budget. Need a sub-Rs.1000 liquid instrument set.
 3. **No take-profit / no square-off.** ORB agent enters + attaches SL-M stop only; it
