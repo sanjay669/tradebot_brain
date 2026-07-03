@@ -40,8 +40,13 @@ before/around the open.
 
 ## After close (15:30)
 1. The runner exits on its own.
-2. Do the [[Daily-Review-Template|end-of-day review]] against `trade_journal.csv`.
-3. File any [[Trade-Postmortem-Template|post-mortems]] for notable trades.
+2. Run the automated review: `python review_day.py` — scores the day, records
+   lessons, writes the Journal note here, and queues any config proposals
+   (see [[Learning-Loop]]).
+3. Approve/reject queued proposals: `python apply_proposals.py` (list),
+   `--approve <id>` / `--reject <id>`. Only approved rules take effect.
+4. Do the [[Daily-Review-Template|end-of-day review]] against `trade_journal.csv`.
+5. File any [[Trade-Postmortem-Template|post-mortems]] for notable trades.
 
 ## Related
 [[Token-Refresh]] · [[Docker]] · [[Incident-Response]] · [[Journal/README]]
