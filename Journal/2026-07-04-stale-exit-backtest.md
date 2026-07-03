@@ -44,4 +44,28 @@ Sensitivity on NTPC: 90min → +13.65, 150min → +18.40, 210min → +14.45.
    3 months on any of the 5 stocks — the 2.5R target is effectively out of reach
    for this signal; exits are decided entirely by stop/stale/close.
 
+## Follow-up: 1.5R target (same 5 stocks, same window)
+
+Since 2.5R never fired, retested with `--rr 1.5` (new backtest flag; config untouched):
+
+| Stock    | 1.5R baseline | 1.5R stale@150 | (2.5R stale@150) |
+|----------|--------------:|---------------:|-----------------:|
+| NTPC     |         +4.65 |         +18.40 |           +18.40 |
+| INFY     |         −1.85 |         +17.40 |           +17.40 |
+| TCS      |        −19.05 |          +1.50 |            +1.50 |
+| SBIN     |        +17.37 |         +39.40 |           +34.25 |
+| RELIANCE |        +83.20 |         +23.15 |           +24.30 |
+| **Total**|       +84.32  |        +99.85  |          +95.85  |
+
+Findings:
+1. At 1.5R the take-profit fires only 1–3 times per stock in 3 months (0 on NTPC)
+   — even the nearer target is rarely reached before stop/stale/close.
+2. **With the stale rule active, the target level barely matters**: 18–21 of ~25
+   trades per stock exit stale; 1.5R vs 2.5R differs by ~4% total (99.85 vs
+   95.85), well within one-window noise.
+3. DECISION: keep `reward_risk_ratio: 2.5` — changing config on a ~4% in-sample
+   difference is exactly the overfitting trap flagged in [[2026-07-02-walkforward]].
+   The exit engine for this signal is stop + stale + close; the R-target is a
+   minor tail-capture lever, not the edge.
+
 Related: [[Learning-Loop]], [[Opening-Range-Breakout]], [[2026-07-03-richer-edge-results]]
