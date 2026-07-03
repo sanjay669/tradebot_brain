@@ -42,6 +42,11 @@ a propose → approve → apply pipeline built into the TraderBot repo (2026-07-
   or above entry. Stops only ever move up.
 - **Dashboard**: `/api/daily` per-day P&L (bar chart + table) and `/api/lessons`
   (learning panel: lessons, rules in force, pending proposals).
+- **Stale exit** (added after the first backfilled reviews, config
+  `strategy.stale_exit`, default 150 min): positions that hit neither target nor
+  stop within `max_hold_minutes` are flattened with reason `stale-exit`. Motivated
+  by the 2026-06-29..07-02 reviews: every loss in those four sandbox days came from
+  dead trades held to the 15:20 square-off, while all take-profits resolved sooner.
 
 ## Honest limits (unchanged — see [[2026-07-03-richer-edge-results]])
 
