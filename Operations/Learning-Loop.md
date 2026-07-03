@@ -47,6 +47,9 @@ a propose → approve → apply pipeline built into the TraderBot repo (2026-07-
   stop within `max_hold_minutes` are flattened with reason `stale-exit`. Motivated
   by the 2026-06-29..07-02 reviews: every loss in those four sandbox days came from
   dead trades held to the 15:20 square-off, while all take-profits resolved sooner.
+  Walk-forward verdict (2026-07-04): P&L-neutral OOS across 24 months — keep for
+  the time-in-market reduction, but it is not edge
+  ([[2026-07-04-stale-exit-backtest]]).
 
 ## Honest limits (unchanged — see [[2026-07-03-richer-edge-results]])
 

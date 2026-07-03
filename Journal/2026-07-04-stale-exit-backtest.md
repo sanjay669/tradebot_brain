@@ -68,4 +68,27 @@ Findings:
    The exit engine for this signal is stop + stale + close; the R-target is a
    minor tail-capture lever, not the edge.
 
+## Walk-forward verdict (24 months, 5 stocks, 6mo-train/3mo-test)
+
+Reran the [[2026-07-02-walkforward]] harness (NTPC, ITC, ONGC, COALINDIA,
+POWERGRID; 2024-07..2026-06; 0.15% cost) with the stale exit added to the
+simulator. Out-of-sample, all test folds combined:
+
+| Variant | Trades | Win% | Net mean/trade | Net total |
+|---|---:|---:|---:|---:|
+| A. fixed bp=0.2 RR=2.5, no stale | 805 | 37.3% | −0.152% | −122.4% |
+| B. fixed bp=0.2 RR=2.5, stale=150 | 805 | 36.4% | **−0.152%** | −122.0% |
+| C. adaptive (bp,RR,stale) per fold | 722 | 35.2% | −0.145% | −104.6% |
+
+- B beats A in only 3/6 folds and is **net-positive in 0/6 folds**.
+- Tuning picked a stale window (90 min) in 5/6 train folds, yet OOS stayed
+  ~−0.15%/trade — the cost hurdle, again.
+
+**CONCLUSION: the Apr–Jul 2026 in-sample improvement was regime luck, the same
+trap as every previous tweak.** Across regimes the stale exit is P&L-NEUTRAL:
+it neither rescues ORB (still invalidated, net-negative every fold) nor hurts.
+Keep it enabled anyway — same expectancy for far less time-in-market is a
+genuine risk reduction — but do not count it as edge. The only path to live
+trading remains a fundamentally better entry signal that passes THIS harness.
+
 Related: [[Learning-Loop]], [[Opening-Range-Breakout]], [[2026-07-03-richer-edge-results]]
